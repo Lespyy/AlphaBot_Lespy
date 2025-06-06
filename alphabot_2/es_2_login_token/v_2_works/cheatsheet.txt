@@ -1,0 +1,64 @@
+Cheatsheet tpsit flask 
+
+    Libreria
+
+        from flask import Flask, render_template, request, redirect, url_for, make_response
+        import sqlite3
+        import hashlib
+        import jwt
+        import datetime
+
+    Flask
+
+        app = Flask(__name__)
+        @app.route('/login', methods=['GET', 'POST'])
+        def login():
+        if request.method == 'POST':
+        email = request.form.get('e-mail')
+        return render_template('login.html')
+        if request.form.get('action') == 'Logout':
+
+    db
+
+        with sqlite3.connect(db_name) as conn:
+        cursor = conn.cursor()
+        cursor.execute(string name = ?", name)
+        result = cursor.fetchone()
+        fetchall()
+        fetchmany(size)
+        if result is None:
+            return render_template("login.html", alert="Invalid credentials")
+        else:
+            response = make_response(redirect(url_for('index')))
+            expiration = datetime.datetime.utcnow() + datetime.timedelta(days=1)
+            token = jwt.encode({"email": email, "exp": expiration}, Secret_key, algorithm="HS256")
+            response.set_cookie("token", token, max_age=60*60*24)
+            return response
+
+        token = request.cookies.get("token")
+        decoded_token = jwt.decode(token, Secret_key, algorithms=["HS256"])
+        email = decoded_token["email"]
+        response.delete_cookie("token")
+
+    html
+
+        <form action="/submit" method="post">
+        <label for="tipo">Text Input:</label>
+        <input type="text" id="text" name="text"><br><br>
+        <input type="number" id="number" name="number"><br><br>
+        <input type="email" id="email" name="email"><br><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="date" id="date" name="date"><br><br>
+        <input type="time" id="time" name="time"><br><br>
+        <input type="color" id="color" name="color"><br><br>
+        <input type="range" id="range" name="range" min="0" max="100"><br><br>
+        <input type="file" id="file" name="file"><br><br>
+        <select id="select" name="select">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select><br><br>
+        <button type="submit">Submit</button>
+        <button type="submit" name="action" value="S">S</button>
+
+        rinominarli in action
